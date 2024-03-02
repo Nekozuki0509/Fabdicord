@@ -50,7 +50,7 @@ public class Fabdicord implements ModInitializer {
 						new Identifier("velocity", "Fabdicord"),
 						new PacketByteBuf(Unpooled.wrappedBuffer(("DEATH:"+SERVER_NAME+":"+player.getName()+":"+player.getWorld().getDimension()+":"
 								+((int) Objects.requireNonNull(damageSource.getPosition()).x)+":"+((int) damageSource.getPosition().y)+":"+((int) damageSource.getPosition().z)+":"
-								+damageSource.getDeathMessage(player).getString().replace(player.getName()+" ", ""))
+								+damageSource.getDeathMessage(player).getString())
 								.getBytes(StandardCharsets.UTF_8)))
 				);
 		});
