@@ -61,12 +61,13 @@ public class Fabdicord implements ModInitializer {
 				ServerPlayNetworking.send(
 						player,
 						new Identifier("velocity", "fabdicord"),
-						new PacketByteBuf(Unpooled.wrappedBuffer(("ADVANCEMENT:"+SERVER_NAME+":"+player.getName()+":"+display.getTitle().getString()+":"+display.getDescription())
+						new PacketByteBuf(Unpooled.wrappedBuffer(("ADVANCEMENT:"+SERVER_NAME+":"+player.getName().getString()+":"+display.getTitle().getString()+":"+display.getDescription().getString())
 								.getBytes(StandardCharsets.UTF_8)))
 				);
 		});
 
-		ServerMessageEvents.COMMAND_MESSAGE.register((message, source, params) -> {ServerPlayNetworking.send(
+		ServerMessageEvents.COMMAND_MESSAGE.register((message, source, params) -> {
+			ServerPlayNetworking.send(
                 Objects.requireNonNull(source.getPlayer()),
 				new Identifier("velocity", "fabdicord"),
 				new PacketByteBuf(Unpooled.wrappedBuffer(("COMMAND:"+SERVER_NAME+":"+Objects.requireNonNull(source.getPlayer()).getName()+":"+message.getContent()).getBytes(StandardCharsets.UTF_8))));
