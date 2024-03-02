@@ -33,13 +33,13 @@ public class Fabdicord implements ModInitializer {
 		//command type:server:player:command
 		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> ServerPlayNetworking.send(
 				handler.player,
-				new Identifier("velocity", "Fabdicord"),
+				new Identifier("velocity", "fabdicord"),
 				new PacketByteBuf(Unpooled.wrappedBuffer(("CONNECT:"+SERVER_NAME+":"+handler.player.getName()).getBytes(StandardCharsets.UTF_8))))
 		);
 
 		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> ServerPlayNetworking.send(
 				handler.player,
-				new Identifier("velocity", "Fabdicord"),
+				new Identifier("velocity", "fabdicord"),
 				new PacketByteBuf(Unpooled.wrappedBuffer(("DISCONNECT:"+SERVER_NAME+":"+handler.player.getName()).getBytes(StandardCharsets.UTF_8))))
 		);
 
@@ -47,7 +47,7 @@ public class Fabdicord implements ModInitializer {
 			if (entity instanceof ServerPlayerEntity player)
 				ServerPlayNetworking.send(
 						player,
-						new Identifier("velocity", "Fabdicord"),
+						new Identifier("velocity", "fabdicord"),
 						new PacketByteBuf(Unpooled.wrappedBuffer(("DEATH:"+SERVER_NAME+":"+player.getName()+":"+player.getWorld().getDimension()+":"
 								+((int) Objects.requireNonNull(damageSource.getPosition()).x)+":"+((int) damageSource.getPosition().y)+":"+((int) damageSource.getPosition().z)+":"
 								+damageSource.getDeathMessage(player).getString())
@@ -60,7 +60,7 @@ public class Fabdicord implements ModInitializer {
 			if (!((display=advancement.getDisplay()) == null || display.isHidden()))
 				ServerPlayNetworking.send(
 						player,
-						new Identifier("velocity", "Fabdicord"),
+						new Identifier("velocity", "fabdicord"),
 						new PacketByteBuf(Unpooled.wrappedBuffer(("ADVANCEMENT:"+SERVER_NAME+":"+player.getName()+":"+display.getTitle().getString()+":"+display.getDescription())
 								.getBytes(StandardCharsets.UTF_8)))
 				);
@@ -68,7 +68,7 @@ public class Fabdicord implements ModInitializer {
 
 		ServerMessageEvents.COMMAND_MESSAGE.register((message, source, params) -> {ServerPlayNetworking.send(
                 Objects.requireNonNull(source.getPlayer()),
-				new Identifier("velocity", "Fabdicord"),
+				new Identifier("velocity", "fabdicord"),
 				new PacketByteBuf(Unpooled.wrappedBuffer(("COMMAND:"+SERVER_NAME+":"+Objects.requireNonNull(source.getPlayer()).getName()+":"+message.getContent()).getBytes(StandardCharsets.UTF_8))));
 			LOGGER.info(message.getSignedContent());
 			LOGGER.info(String.valueOf(message.getContent()));
