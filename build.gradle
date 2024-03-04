@@ -24,7 +24,6 @@ loom {
 	mods {
 		"fabdicord" {
 			sourceSet sourceSets.main
-			sourceSet sourceSets.client
 		}
 	}
 

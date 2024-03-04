@@ -17,20 +17,13 @@
 	"entrypoints": {
 		"main": [
 			"fabdicord.fabdicord.Fabdicord"
-		],
-		"client": [
-			"fabdicord.fabdicord.FabdicordClient"
 		]
 	},
 	"mixins": [
-		"fabdicord.mixins.json",
-		{
-			"config": "fabdicord.client.mixins.json",
-			"environment": "client"
-		}
+		"fabdicord.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.15.7",
+		"fabricloader": ">=0.14.23",
 		"minecraft": "~1.20.1",
 		"java": ">=17",
 		"fabric-api": "*"

@@ -1,9 +1,11 @@
 package fabdicord.fabdicord;
 
+import com.mojang.brigadier.CommandDispatcher;
 import fabdicord.fabdicord.config.ModConfigs;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
@@ -12,6 +14,8 @@ import net.minecraft.advancement.AdvancementDisplay;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 import static fabdicord.fabdicord.config.ModConfigs.*;
+import static net.minecraft.server.command.CommandManager.*;
 
 public class Fabdicord implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("fabdicord");
@@ -27,35 +32,8 @@ public class Fabdicord implements ModInitializer {
 	public void onInitialize() {
 		ModConfigs.registerConfigs();
 
-		//(dis)connect type:server:player
-		//death type:server:player:dim:x:y:z:message
-		//advancement type:server:player:title:description
-		//command type:server:player:command
-		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> ServerPlayNetworking.send(
-				handler.player,
-				new Identifier("velocity", "fabdicord"),
-				new PacketByteBuf(Unpooled.wrappedBuffer(("CONNECT:"+SERVER_NAME+":"+handler.player.getName()).getBytes(StandardCharsets.UTF_8))))
-		);
-
-		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> ServerPlayNetworking.send(
-				handler.player,
-				new Identifier("velocity", "fabdicord"),
-				new PacketByteBuf(Unpooled.wrappedBuffer(("DISCONNECT:"+SERVER_NAME+":"+handler.player.getName()).getBytes(StandardCharsets.UTF_8))))
-		);
-
-		ServerLivingEntityEvents.AFTER_DEATH.register((entity, damageSource) -> {
-			if (entity instanceof ServerPlayerEntity player)
-				ServerPlayNetworking.send(
-						player,
-						new Identifier("velocity", "fabdicord"),
-						new PacketByteBuf(Unpooled.wrappedBuffer(("DEATH:"+SERVER_NAME+":"+player.getName()+":"+player.getWorld().getDimension()+":"
-								+((int) Objects.requireNonNull(damageSource.getPosition()).x)+":"+((int) damageSource.getPosition().y)+":"+((int) damageSource.getPosition().z)+":"
-								+damageSource.getDeathMessage(player).getString())
-								.getBytes(StandardCharsets.UTF_8)))
-				);
-		});
-
 		AdvancementCallback.EVENT.register((player, advancement) -> {
+			//advancement type:server:player:title:description
 			AdvancementDisplay display;
 			if (!((display=advancement.getDisplay()) == null || display.isHidden()))
 				ServerPlayNetworking.send(
@@ -67,6 +45,7 @@ public class Fabdicord implements ModInitializer {
 		});
 
 		ServerMessageEvents.COMMAND_MESSAGE.register((message, source, params) -> {
+			//command type:server:player:command
 			ServerPlayNetworking.send(
                 Objects.requireNonNull(source.getPlayer()),
 				new Identifier("velocity", "fabdicord"),
@@ -75,6 +54,23 @@ public class Fabdicord implements ModInitializer {
 			LOGGER.info(String.valueOf(message.getContent()));
 		});
 
+		//pos type:server:player:dim:x:y:z
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> register(dispatcher));
+
 		LOGGER.info("fabdicord loaded");
 	}
+		public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+			dispatcher.register(literal("pos")
+					.executes(ctx -> {
+						final ServerPlayerEntity self = ctx.getSource().getPlayer();
+						ServerPlayNetworking.send(
+								Objects.requireNonNull(self),
+								new Identifier("velocity", "fabdicord"),
+								new PacketByteBuf(Unpooled.wrappedBuffer(("POS:" + SERVER_NAME + ":" + Objects.requireNonNull(self).getName().getString() + ":"
+										+ (self.getWorld().getRegistryKey()==World.OVERWORLD?"OVERWORLD":self.getWorld().getRegistryKey()==World.NETHER?"NETHER":"END") + ":"
+										+ "(" + ((int) self.getPos().x) + ", " + ((int) self.getPos().y) + ", " + ((int) self.getPos().z) + ")"
+								).getBytes(StandardCharsets.UTF_8))));
+						return 1;
+					}));
+		}
 }
