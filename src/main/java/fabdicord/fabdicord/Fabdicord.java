@@ -44,16 +44,6 @@ public class Fabdicord implements ModInitializer {
 				);
 		});
 
-		ServerMessageEvents.COMMAND_MESSAGE.register((message, source, params) -> {
-			//command type:server:player:command
-			ServerPlayNetworking.send(
-                Objects.requireNonNull(source.getPlayer()),
-				new Identifier("velocity", "fabdicord"),
-				new PacketByteBuf(Unpooled.wrappedBuffer(("COMMAND:"+SERVER_NAME+":"+Objects.requireNonNull(source.getPlayer()).getName()+":"+message.getContent()).getBytes(StandardCharsets.UTF_8))));
-			LOGGER.info(message.getSignedContent());
-			LOGGER.info(String.valueOf(message.getContent()));
-		});
-
 		//pos type:server:player:dim:x:y:z
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> register(dispatcher));
 
