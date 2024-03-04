@@ -1,4 +1,4 @@
-#### Fabdicord
+# Fabdicord
 ## 説明
 [Velodicord](https://modrinth.com/plugin/velodicord)のfabricサーバー側のアドオン
 ## 使い方
