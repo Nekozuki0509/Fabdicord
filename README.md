@@ -9,4 +9,4 @@
 ```
 SERVER_NAME=s #String | default: s | comment: it's this server name
 ```
-## [modrinth](https://modrinth.com/project/velodicord)で公開しています(現在申請中)
+## [modrinth](https://modrinth.com/project/velodicord)で公開しています
