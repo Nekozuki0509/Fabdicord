@@ -3,10 +3,10 @@ package fabdicord.fabdicord.mixin;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.network.MessageType;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.message.MessageType;
-import net.minecraft.network.message.SentMessage;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 import static fabdicord.fabdicord.config.ModConfigs.SERVER_NAME;
 
@@ -33,8 +34,8 @@ public class ServerPlayerEntityMixin {
                         .getBytes(StandardCharsets.UTF_8))));
     }
 
-    @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
-    private void blockChat(SentMessage message, boolean filterMaskEnabled, MessageType.Parameters params, CallbackInfo ci) {
+    @Inject(method = "sendMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/MessageType;Ljava/util/UUID;)V", at = @At("HEAD"), cancellable = true)
+    private void blockChat(Text message, MessageType type, UUID sender, CallbackInfo ci) {
         ci.cancel();
     }
 }

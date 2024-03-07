@@ -1,6 +1,6 @@
 package fabdicord.fabdicord.mixin;
 
-import com.mojang.brigadier.ParseResults;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
@@ -21,8 +21,8 @@ import static fabdicord.fabdicord.config.ModConfigs.SERVER_NAME;
 @Mixin(CommandManager.class)
 public class CommandManagerMixin {
     @Inject(method = ("execute"), at = @At("HEAD"))
-    public void executeCommandInject(ParseResults<ServerCommandSource> parseResults, String command, CallbackInfoReturnable<Integer> cir) {
-        ServerPlayerEntity player = (parseResults.getContext().getSource()).getPlayer();
+    public void executeCommandInject(ServerCommandSource commandSource, String command, CallbackInfoReturnable<Integer> cir) throws CommandSyntaxException {
+        ServerPlayerEntity player = commandSource.getPlayer();
         //command type:server:player:command
         ServerPlayNetworking.send(
                 Objects.requireNonNull(player),

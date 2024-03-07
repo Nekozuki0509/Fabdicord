@@ -5,7 +5,7 @@ import fabdicord.fabdicord.config.ModConfigs;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.advancement.AdvancementDisplay;
 import net.minecraft.network.PacketByteBuf;
@@ -42,7 +42,7 @@ public class Fabdicord implements ModInitializer {
 		});
 
 		//pos type:server:player:dim:x:y:z
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> register(dispatcher));
+		CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> register(dispatcher));
 
 		LOGGER.info("fabdicord loaded");
 	}
