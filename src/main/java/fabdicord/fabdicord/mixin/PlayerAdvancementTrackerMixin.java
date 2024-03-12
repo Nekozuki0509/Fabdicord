@@ -15,7 +15,7 @@ public class PlayerAdvancementTrackerMixin {
     @Shadow
     private ServerPlayerEntity owner;
 
-    @Inject(method = "grantCriterion", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/PlayerManager;broadcast(Lnet/minecraft/text/Text;Z)V"))
+    @Inject(method = "grantCriterion", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/PlayerManager;broadcast(Lnet/minecraft/text/Text;Lnet/minecraft/network/MessageType;Ljava/util/UUID;)V"))
     public void onAdvancement(Advancement advancement, String criterionName, CallbackInfoReturnable<Boolean> cir) {
         AdvancementCallback.EVENT.invoker().getAdvancement(this.owner, advancement);
     }
