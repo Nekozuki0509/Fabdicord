@@ -1,6 +1,7 @@
 package fabdicord.fabdicord;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import fabdicord.fabdicord.config.ModConfigs;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ModInitializer;
@@ -42,22 +43,34 @@ public class Fabdicord implements ModInitializer {
 		});
 
 		//pos type:server:player:dim:x:y:z
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> register(dispatcher));
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
+				dispatcher.register(literal("pos")
+								.executes(ctx -> {
+									final ServerPlayerEntity self = ctx.getSource().getPlayer();
+									ServerPlayNetworking.send(
+											Objects.requireNonNull(self),
+											new Identifier("velocity", "fabdicord"),
+											new PacketByteBuf(Unpooled.wrappedBuffer(("POS:" + SERVER_NAME + ":" + Objects.requireNonNull(self).getName().getString() + ":"
+													+ (self.getWorld().getRegistryKey()==World.OVERWORLD?"OVERWORLD":self.getWorld().getRegistryKey()==World.NETHER?"NETHER":"END") + ":"
+													+ "(" + ((int) self.getPos().x) + ", " + ((int) self.getPos().y) + ", " + ((int) self.getPos().z) + ")"
+											).getBytes(StandardCharsets.UTF_8))));
+									return 1;
+								}).then(argument("name", StringArgumentType.string())
+										.executes(ctx -> {
+											final ServerPlayerEntity self = ctx.getSource().getPlayer();
+											ServerPlayNetworking.send(
+													Objects.requireNonNull(self),
+													new Identifier("velocity", "fabdicord"),
+													new PacketByteBuf(Unpooled.wrappedBuffer(("NPOS:" + SERVER_NAME + ":" + Objects.requireNonNull(self).getName().getString() + ":"
+															+ (self.getWorld().getRegistryKey()==World.OVERWORLD?"OVERWORLD":self.getWorld().getRegistryKey()==World.NETHER?"NETHER":"END") + ":"
+															+ "(" + ((int) self.getPos().x) + ", " + ((int) self.getPos().y) + ", " + ((int) self.getPos().z) + "):"
+															+ StringArgumentType.getString(ctx, "name")
+													).getBytes(StandardCharsets.UTF_8))));
+											return 1;
+										})
+								)
+				));
 
 		LOGGER.info("fabdicord loaded");
 	}
-		public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-			dispatcher.register(literal("pos")
-					.executes(ctx -> {
-						final ServerPlayerEntity self = ctx.getSource().getPlayer();
-						ServerPlayNetworking.send(
-								Objects.requireNonNull(self),
-								new Identifier("velocity", "fabdicord"),
-								new PacketByteBuf(Unpooled.wrappedBuffer(("POS:" + SERVER_NAME + ":" + Objects.requireNonNull(self).getName().getString() + ":"
-										+ (self.getWorld().getRegistryKey()==World.OVERWORLD?"OVERWORLD":self.getWorld().getRegistryKey()==World.NETHER?"NETHER":"END") + ":"
-										+ "(" + ((int) self.getPos().x) + ", " + ((int) self.getPos().y) + ", " + ((int) self.getPos().z) + ")"
-								).getBytes(StandardCharsets.UTF_8))));
-						return 1;
-					}));
-		}
 }
