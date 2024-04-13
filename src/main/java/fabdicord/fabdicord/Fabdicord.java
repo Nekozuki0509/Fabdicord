@@ -55,7 +55,7 @@ public class Fabdicord implements ModInitializer {
 													+ "(" + ((int) self.getPos().x) + ", " + ((int) self.getPos().y) + ", " + ((int) self.getPos().z) + ")"
 											).getBytes(StandardCharsets.UTF_8))));
 									return 1;
-								}).then(argument("name", StringArgumentType.string())
+								}).then(argument("name", StringArgumentType.word())
 										.executes(ctx -> {
 											final ServerPlayerEntity self = ctx.getSource().getPlayer();
 											ServerPlayNetworking.send(
