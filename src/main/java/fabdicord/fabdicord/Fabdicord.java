@@ -34,7 +34,7 @@ public class Fabdicord implements ModInitializer {
 
 	static Path configjson;
 
-	static Map<String, String> config;
+	public static Map<String, String> config;
 
 	public static Gson gson = new Gson();
 

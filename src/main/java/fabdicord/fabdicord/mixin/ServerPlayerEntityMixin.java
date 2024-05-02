@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 import static fabdicord.fabdicord.Fabdicord.blockchat;
-import static fabdicord.fabdicord.config.ModConfigs.SERVER_NAME;
+import static fabdicord.fabdicord.Fabdicord.config;
 
 @Mixin(ServerPlayerEntity.class)
 public class ServerPlayerEntityMixin {
@@ -29,7 +29,7 @@ public class ServerPlayerEntityMixin {
         ServerPlayNetworking.send(
                 player,
                 new Identifier("velocity", "fabdicord"),
-                new PacketByteBuf(Unpooled.wrappedBuffer(("DEATH:"+SERVER_NAME+":"+player.getName().getString()+":"
+                new PacketByteBuf(Unpooled.wrappedBuffer(("DEATH:"+config.get("SERVER")+":"+player.getName().getString()+":"
                         + (player.getWorld().getRegistryKey()== World.OVERWORLD?"OVERWORLD":player.getWorld().getRegistryKey()==World.NETHER?"NETHER":"END") + ":"
                         + "(" + ((int) player.getPos().x) + ", " + ((int) player.getPos().y) + ", " + ((int) player.getPos().z) + ")" + ":" + source.getDeathMessage(player).getString())
                         .getBytes(StandardCharsets.UTF_8))));
