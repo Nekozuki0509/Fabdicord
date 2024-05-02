@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-import static fabdicord.fabdicord.config.ModConfigs.SERVER_NAME;
+import static fabdicord.fabdicord.Fabdicord.config;
 
 @Mixin(CommandManager.class)
 public class CommandManagerMixin {
@@ -27,6 +27,6 @@ public class CommandManagerMixin {
         ServerPlayNetworking.send(
                 Objects.requireNonNull(player),
                 new Identifier("velocity", "fabdicord"),
-                new PacketByteBuf(Unpooled.wrappedBuffer(("COMMAND:"+SERVER_NAME+":"+player.getName().getString()+":"+command).getBytes(StandardCharsets.UTF_8))));
+                new PacketByteBuf(Unpooled.wrappedBuffer(("COMMAND:"+config.get("SERVER")+":"+player.getName().getString()+":"+command).getBytes(StandardCharsets.UTF_8))));
     }
 }
