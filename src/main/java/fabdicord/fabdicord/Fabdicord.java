@@ -13,7 +13,10 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancement.AdvancementDisplay;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,6 +104,7 @@ public class Fabdicord implements ModInitializer {
 						.then(argument("blockchat", BoolArgumentType.bool())
 								.executes(ctx -> {
 									blockchat = BoolArgumentType.getBool(ctx, "blockchat");
+									ctx.getSource().getServer().sendSystemMessage(new TranslatableText("blockchatを" + blockchat + "に設定しました").formatted(Formatting.AQUA), Util.NIL_UUID);
 									return 1;
 								})
 						)
