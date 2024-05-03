@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.nio.charset.StandardCharsets;
 
-import static fabdicord.fabdicord.Fabdicord.blockchat;
 import static fabdicord.fabdicord.Fabdicord.config;
 
 
@@ -37,6 +36,6 @@ public class ServerPlayerEntityMixin {
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     private void blockChat(SentMessage message, boolean filterMaskEnabled, MessageType.Parameters params, CallbackInfo ci) {
-        if (blockchat)ci.cancel();
+        ci.cancel();
     }
 }
