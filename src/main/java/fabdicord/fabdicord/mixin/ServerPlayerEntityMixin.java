@@ -17,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
-import static fabdicord.fabdicord.Fabdicord.blockchat;
 import static fabdicord.fabdicord.Fabdicord.config;
 
 @Mixin(ServerPlayerEntity.class)
@@ -37,6 +36,6 @@ public class ServerPlayerEntityMixin {
 
     @Inject(method = "sendMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/MessageType;Ljava/util/UUID;)V", at = @At("HEAD"), cancellable = true)
     private void blockChat(Text message, MessageType type, UUID sender, CallbackInfo ci) {
-        if (type == MessageType.CHAT && blockchat) ci.cancel();
+        if (type == MessageType.CHAT) ci.cancel();
     }
 }

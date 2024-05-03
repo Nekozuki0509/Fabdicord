@@ -2,7 +2,6 @@ package fabdicord.fabdicord;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ModInitializer;
@@ -13,10 +12,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancement.AdvancementDisplay;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +28,6 @@ import static net.minecraft.server.command.CommandManager.*;
 
 public class Fabdicord implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("fabdicord");
-
-	public static boolean blockchat = true;
 
 	static Path configjson;
 
@@ -97,18 +91,6 @@ public class Fabdicord implements ModInitializer {
 							})
 					)
 			)
-		);
-
-		CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) ->
-				dispatcher.register(literal("blockchat")
-						.then(argument("blockchat", BoolArgumentType.bool())
-								.executes(ctx -> {
-									blockchat = BoolArgumentType.getBool(ctx, "blockchat");
-									ctx.getSource().getServer().sendSystemMessage(new TranslatableText("blockchatを" + blockchat + "に設定しました").formatted(Formatting.AQUA), Util.NIL_UUID);
-									return 1;
-								})
-						)
-				)
 		);
 
 		LOGGER.info("fabdicord loaded");
