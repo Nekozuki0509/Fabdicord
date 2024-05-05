@@ -23,6 +23,7 @@ public class CommandManagerMixin {
     @Inject(method = ("execute"), at = @At("HEAD"))
     public void executeCommandInject(ParseResults<ServerCommandSource> parseResults, String command, CallbackInfoReturnable<Integer> cir) {
         ServerPlayerEntity player = (parseResults.getContext().getSource()).getPlayer();
+        if (player == null) return;
         //command type:server:player:command
         ServerPlayNetworking.send(
                 Objects.requireNonNull(player),
