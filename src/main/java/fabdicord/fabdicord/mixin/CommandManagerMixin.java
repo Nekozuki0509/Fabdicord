@@ -24,6 +24,7 @@ public class CommandManagerMixin {
     @Inject(method = ("execute"), at = @At("HEAD"))
     public void executeCommandInject(ServerCommandSource commandSource, String command, CallbackInfoReturnable<Integer> cir) throws CommandSyntaxException {
         ServerPlayerEntity player = commandSource.getPlayer();
+        if (player == null) return;
         //command type:server:player:command
         ServerPlayNetworking.send(
                 Objects.requireNonNull(player),
