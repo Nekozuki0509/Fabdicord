@@ -68,6 +68,7 @@ public class Fabdicord implements ModInitializer {
 				dispatcher.register(literal("pos")
 								.executes(ctx -> {
 									final ServerPlayerEntity self = ctx.getSource().getPlayer();
+									if (self == null) return 1;
 									ServerPlayNetworking.send(
 											Objects.requireNonNull(self),
 											new Identifier("velocity", "fabdicord"),
@@ -79,6 +80,7 @@ public class Fabdicord implements ModInitializer {
 								}).then(argument("name", StringArgumentType.string())
 										.executes(ctx -> {
 											final ServerPlayerEntity self = ctx.getSource().getPlayer();
+											if (self == null) return 1;
 											ServerPlayNetworking.send(
 													Objects.requireNonNull(self),
 													new Identifier("velocity", "fabdicord"),
