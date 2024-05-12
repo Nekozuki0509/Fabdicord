@@ -27,8 +27,8 @@ public class ServerPlayerEntityMixin {
         ServerPlayNetworking.send(
                 player,
                 new Identifier("velocity", "fabdicord"),
-                new PacketByteBuf(Unpooled.wrappedBuffer(("DEATH:"+config.get("SERVER")+":"+player.getName().getString()+":"
-                        + (player.getWorld().getRegistryKey()== World.OVERWORLD?"OVERWORLD":player.getWorld().getRegistryKey()==World.NETHER?"NETHER":"END") + ":"
+                new PacketByteBuf(Unpooled.wrappedBuffer(("DEATH:" + config.get("SERVER") + ":" + player.getName().getString() + ":"
+                        + (player.getWorld().getRegistryKey() == World.OVERWORLD ? "OVERWORLD" : player.getWorld().getRegistryKey() == World.NETHER ? "NETHER" : "END") + ":"
                         + "(" + ((int) player.getPos().x) + ", " + ((int) player.getPos().y) + ", " + ((int) player.getPos().z) + ")" + ":" + source.getDeathMessage(player).getString())
                         .getBytes(StandardCharsets.UTF_8))));
     }

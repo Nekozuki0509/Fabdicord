@@ -7,11 +7,11 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 public interface AdvancementCallback {
     Event<AdvancementCallback> EVENT = EventFactory.createArrayBacked(AdvancementCallback.class,
-        (listeners) -> (player, advancement) -> {
-            for (AdvancementCallback listener : listeners) {
-                listener.getAdvancement(player, advancement);
-            }
-    });
+            (listeners) -> (player, advancement) -> {
+                for (AdvancementCallback listener : listeners) {
+                    listener.getAdvancement(player, advancement);
+                }
+            });
 
-    public void getAdvancement(ServerPlayerEntity player, Advancement advancement);
+    void getAdvancement(ServerPlayerEntity player, Advancement advancement);
 }

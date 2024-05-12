@@ -18,6 +18,7 @@ import java.util.Objects;
 
 import static fabdicord.fabdicord.Fabdicord.config;
 
+
 @Mixin(CommandManager.class)
 public class CommandManagerMixin {
     @Inject(method = ("execute"), at = @At("HEAD"))
@@ -28,6 +29,6 @@ public class CommandManagerMixin {
         ServerPlayNetworking.send(
                 Objects.requireNonNull(player),
                 new Identifier("velocity", "fabdicord"),
-                new PacketByteBuf(Unpooled.wrappedBuffer(("COMMAND:"+config.get("SERVER")+":"+player.getName().getString()+":"+command).getBytes(StandardCharsets.UTF_8))));
+                new PacketByteBuf(Unpooled.wrappedBuffer(("COMMAND:" + config.get("SERVER") + ":" + player.getName().getString() + ":" + command).getBytes(StandardCharsets.UTF_8))));
     }
 }
