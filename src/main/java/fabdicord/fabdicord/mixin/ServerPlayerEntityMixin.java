@@ -18,7 +18,6 @@ import java.nio.charset.StandardCharsets;
 
 import static fabdicord.fabdicord.Fabdicord.config;
 
-
 @Mixin(ServerPlayerEntity.class)
 public class ServerPlayerEntityMixin {
     @Inject(method = "onDeath", at = @At("TAIL"))
@@ -28,8 +27,8 @@ public class ServerPlayerEntityMixin {
         ServerPlayNetworking.send(
                 player,
                 new Identifier("velocity", "fabdicord"),
-                new PacketByteBuf(Unpooled.wrappedBuffer(("DEATH:"+config.get("SERVER")+":"+player.getName().getString()+":"
-                        + (player.getWorld().getRegistryKey()== World.OVERWORLD?"OVERWORLD":player.getWorld().getRegistryKey()==World.NETHER?"NETHER":"END") + ":"
+                new PacketByteBuf(Unpooled.wrappedBuffer(("DEATH:" + config.get("SERVER") + ":" + player.getName().getString() + ":"
+                        + (player.getWorld().getRegistryKey() == World.OVERWORLD ? "OVERWORLD" : player.getWorld().getRegistryKey() == World.NETHER ? "NETHER" : "END") + ":"
                         + "(" + ((int) player.getPos().x) + ", " + ((int) player.getPos().y) + ", " + ((int) player.getPos().z) + ")" + ":" + source.getDeathMessage(player).getString())
                         .getBytes(StandardCharsets.UTF_8))));
     }
