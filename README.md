@@ -8,6 +8,9 @@
 1. 楽しみましょう!
 ## configファイル
 ```
-SERVER_NAME=s #String | default: s | comment: it's this server name
+{
+  "_Scomment_" : "it's this server name",
+  "SERVER" : "s"
+}
 ```
 ## [modrinth](https://modrinth.com/mod/fabdicord)で公開しています
