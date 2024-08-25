@@ -5,6 +5,8 @@ build/
 out/
 classes/
 
+lib/
+
 # eclipse
 
 *.launch
@@ -38,3 +40,4 @@ hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
+/lib/
