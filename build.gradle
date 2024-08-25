@@ -61,8 +61,6 @@ dependencies {
 	include 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
 	include 'com.fasterxml.jackson.core:jackson-annotations:2.17.1'
 	include 'org.apache.commons:commons-collections4:4.4'
-
-	compileOnly files("lib/Discord-MC-Chat-1.21-2.3.4.jar")
 }
 
 processResources {
