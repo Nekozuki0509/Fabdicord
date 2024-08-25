@@ -137,34 +137,27 @@ public class Fabdicord implements ModInitializer {
 
         ServerName = config.get("ServerName");
 
-        //pos type:server:player:dim:x:y:z
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
                 dispatcher.register(literal("pos")
                         .executes(ctx -> {
+                            if (!ctx.getSource().isExecutedByPlayer()) return 1;
+
                             final ServerPlayerEntity self = ctx.getSource().getPlayer();
                             final Vec3d pos = ctx.getSource().getPosition();
-                            if (self == null) return 1;
-                            ServerPlayNetworking.send(
-                                    Objects.requireNonNull(self),
-                                    new Identifier("velocity", "fabdicord"),
-                                    new PacketByteBuf(Unpooled.wrappedBuffer(("POS&" + ServerName + "&" + Objects.requireNonNull(self).getName().getString() + "&"
-                                            + (self.getWorld().getRegistryKey() == World.OVERWORLD ? "OVERWORLD" : self.getWorld().getRegistryKey() == World.NETHER ? "NETHER" : "END") + "&"
-                                            + "(" + (int) pos.x + ", " + (int) pos.y + ", " + (int) pos.z + ")"
-                                    ).getBytes(StandardCharsets.UTF_8))));
+                            PMChannel.sendMessage("POS&" + ServerName + "&" + Objects.requireNonNull(self).getName().getString() + "&"
+                                    + (self.getWorld().getRegistryKey() == World.OVERWORLD ? "OVERWORLD" : self.getWorld().getRegistryKey() == World.NETHER ? "NETHER" : "END") + "&"
+                                    + "(" + (int) pos.x + ", " + (int) pos.y + ", " + (int) pos.z + ")").queue();
                             return 1;
                         }).then(argument("name", StringArgumentType.string())
                                 .executes(ctx -> {
+                                    if (!ctx.getSource().isExecutedByPlayer()) return 1;
+
                                     final ServerPlayerEntity self = ctx.getSource().getPlayer();
                                     final Vec3d pos = ctx.getSource().getPosition();
-                                    if (self == null) return 1;
-                                    ServerPlayNetworking.send(
-                                            Objects.requireNonNull(self),
-                                            new Identifier("velocity", "fabdicord"),
-                                            new PacketByteBuf(Unpooled.wrappedBuffer(("NPOS&" + ServerName + "&" + Objects.requireNonNull(self).getName().getString() + "&"
-                                                    + (self.getWorld().getRegistryKey() == World.OVERWORLD ? "OVERWORLD" : self.getWorld().getRegistryKey() == World.NETHER ? "NETHER" : "END") + "&"
-                                                    + "(" + (int) pos.x + ", " + (int) pos.y + ", " + (int) pos.z + ")&"
-                                                    + StringArgumentType.getString(ctx, "name")
-                                            ).getBytes(StandardCharsets.UTF_8))));
+                                    PMChannel.sendMessage("NPOS&" + ServerName + "&" + Objects.requireNonNull(self).getName().getString() + "&"
+                                            + (self.getWorld().getRegistryKey() == World.OVERWORLD ? "OVERWORLD" : self.getWorld().getRegistryKey() == World.NETHER ? "NETHER" : "END") + "&"
+                                            + "(" + (int) pos.x + ", " + (int) pos.y + ", " + (int) pos.z + ")&"
+                                            + StringArgumentType.getString(ctx, "name")).queue();
                                     return 1;
                                 })
                         )

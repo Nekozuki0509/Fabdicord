@@ -3,10 +3,7 @@ package fabdicord.fabdicord.mixin;
 import carpet.patches.EntityPlayerMPFake;
 import fabdicord.fabdicord.discord;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.minecraft.advancement.Advancement;
-import net.minecraft.advancement.AdvancementDisplay;
-import net.minecraft.advancement.AdvancementProgress;
-import net.minecraft.advancement.PlayerAdvancementTracker;
+import net.minecraft.advancement.*;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,14 +22,15 @@ public abstract class PlayerAdvancementTrackerMixin {
     private ServerPlayerEntity owner;
 
     @Shadow
-    public abstract AdvancementProgress getProgress(Advancement advancement);
+    public abstract AdvancementProgress getProgress(AdvancementEntry advancement);
 
     @Inject(method = "grantCriterion", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/PlayerManager;broadcast(Lnet/minecraft/text/Text;Z)V"))
-    public void onAdvancement(Advancement advancement, String criterionName, CallbackInfoReturnable<Boolean> cir) {
-        AdvancementDisplay display;
+    public void onAdvancement(AdvancementEntry advancement, String criterionName, CallbackInfoReturnable<Boolean> cir) {
+        if (advancement.value().display().isEmpty() || !advancement.value().display().get().shouldAnnounceToChat() || !getProgress(advancement).isDone()) return;
 
-        if (!getProgress(advancement).isDone() || (display = advancement.getDisplay()) == null || !display.shouldAnnounceToChat())
-            return;
+        AdvancementDisplay display = advancement.value().display().get();
+
+        if (!display.shouldAnnounceToChat()) return;
 
         ServerPlayerEntity player = this.owner;
         String PN = player.getName().getString();

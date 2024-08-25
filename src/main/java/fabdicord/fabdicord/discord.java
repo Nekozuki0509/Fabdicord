@@ -5,6 +5,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.context.ParsedCommandNode;
 import com.mojang.brigadier.suggestion.Suggestions;
+import com.xujiayao.discord_mc_chat.Main;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -22,9 +23,11 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;
+import net.minecraft.server.ServerTickManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.TimeHelper;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
@@ -237,11 +240,13 @@ public class discord extends ListenerAdapter {
 
                         if (onlinePlayers.isEmpty()) builder.append("<<オンラインのプレイヤーはいません>>\n");
                         else
-                            onlinePlayers.forEach(player -> builder.append("[").append(player.pingMilliseconds).append("ms] ")
+                            onlinePlayers.forEach(player -> builder.append("[").append(player.networkHandler.getLatency()).append("ms] ")
                                     .append(player instanceof EntityPlayerMPFake ? "(bot)" : "").append(Objects.requireNonNull(player.getDisplayName()).getString()).append("\n"));
 
-                        double mspt = server.getTickTime();
-                        builder.append("\nTPS:\n").append(Math.min(1000.0 / mspt, 20.0)).append("\n\nMSPT:\n").append(mspt).append("\n\n使用メモリ:\n")
+                        ServerTickManager tickManager = server.getTickManager();
+                        double mspt = (double) server.getAverageNanosPerTick() / (double) TimeHelper.MILLI_IN_NANOS;
+                        builder.append("\nTPS:\n").append(tickManager.isFrozen()?0.0:1000.0 / Math.max(tickManager.isSprinting() ? 0.0 : (double) tickManager.getMillisPerTick(), mspt))
+                                .append("\n\nMSPT:\n").append(mspt).append("\n\n使用メモリ:\n")
                                 .append((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024L / 1024L).append(" MB / ")
                                 .append(Runtime.getRuntime().totalMemory() / 1024L / 1024L).append(" MB\n```");
 
