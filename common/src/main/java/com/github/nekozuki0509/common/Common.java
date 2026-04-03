@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.github.nekozuki0509.common.Discord.getJda;
 import static com.github.nekozuki0509.common.Discord.sendMessage;
 
 public class Common {
@@ -212,7 +211,7 @@ public class Common {
                 LOGGER.error("CONFIG FILE SAVE FAILED: {}", ExceptionUtils.getStackTrace(e));
             }
             sendMessage("\uD83D\uDED1 [%s] が停止しました".formatted(ServerName), true);
-            getJda().shutdown();
+            Discord.getJda().shutdown();
         });
 
         api.onServerStarting(server -> Common.server = server);
