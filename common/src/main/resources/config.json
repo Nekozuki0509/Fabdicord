@@ -1,0 +1,20 @@
+{
+  "_scomment_": "サーバー名",
+  "ServerName": "s",
+  "_bcomment_": "discordbotのtoken",
+  "BotToken": "aaaaaa",
+  "_lcomment_": "マイクラサーバーのログチャンネルID(自動設定)",
+  "LogChannelID": "000000",
+  "_ncomment_": "discordの入退出などの通知チャンネルID(自動設定)",
+  "NoticeChannelID": "000000",
+  "_cccomment_": "discordのコマンドチャンネルID(自動設定)",
+  "CommandChannelID": "000000",
+  "_crcomment_": "管理者コマンドを実行できるロールID(自動設定)",
+  "CommandRoleID": "000000",
+  "_pmtcomment_": "プラグインメッセージのタイプ Discord: 1, WebSocket: 2",
+  "PMType": "1",
+  "_pmcomment_": "discordのプラグインメッセージチャンネルID(PMTypeが1のとき必須)",
+  "PMChannelID": "000000",
+  "_wcomment_": "websocketで使うポート番号をマイクラサーバーのポート番号からいくつインクリメントするか(PMTypeが2のとき必須)",
+  "WebSocketPortIncrement": "1"
+}
