@@ -21,4 +21,19 @@ public class DiscordCommandSourceImpl extends DiscordCommandSource implements Co
     public void sendMessage(Text message) {
         sendSystemMessage(message, null);
     }
+
+    @Override
+    public boolean shouldReceiveFeedback() {
+        return super.shouldReceiveFeedback();
+    }
+
+    @Override
+    public boolean shouldTrackOutput() {
+        return super.shouldTrackOutput();
+    }
+
+    @Override
+    public boolean shouldBroadcastConsoleToOps() {
+        return super.shouldBroadcastConsoleToOps();
+    }
 }
