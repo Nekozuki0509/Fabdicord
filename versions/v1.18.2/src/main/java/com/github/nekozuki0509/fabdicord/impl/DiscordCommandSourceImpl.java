@@ -17,4 +17,19 @@ public class DiscordCommandSourceImpl extends DiscordCommandSource implements Co
     public void sendSystemMessage(Text message, UUID sender) {
         super.sendSystemMessage(new TextToMinecraftText(message), sender);
     }
+
+    @Override
+    public boolean shouldReceiveFeedback() {
+        return super.shouldReceiveFeedbackImpl();
+    }
+
+    @Override
+    public boolean shouldTrackOutput() {
+        return super.shouldTrackOutputImpl();
+    }
+
+    @Override
+    public boolean shouldBroadcastConsoleToOps() {
+        return super.shouldBroadcastConsoleToOpsImpl();
+    }
 }

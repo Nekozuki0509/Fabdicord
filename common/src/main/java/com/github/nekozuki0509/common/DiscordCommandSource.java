@@ -47,15 +47,15 @@ public abstract class DiscordCommandSource {
         this.lastOutputMillis = currentOutputMillis;
     }
 
-    public boolean shouldReceiveFeedback() {
+    public boolean shouldReceiveFeedbackImpl() {
         return true;
     }
 
-    public boolean shouldTrackOutput() {
+    public boolean shouldTrackOutputImpl() {
         return true;
     }
 
-    public boolean shouldBroadcastConsoleToOps() {
+    public boolean shouldBroadcastConsoleToOpsImpl() {
         return true;
     }
 }

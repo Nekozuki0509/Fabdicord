@@ -24,16 +24,16 @@ public class DiscordCommandSourceImpl extends DiscordCommandSource implements Co
 
     @Override
     public boolean shouldReceiveFeedback() {
-        return super.shouldReceiveFeedback();
+        return super.shouldReceiveFeedbackImpl();
     }
 
     @Override
     public boolean shouldTrackOutput() {
-        return super.shouldTrackOutput();
+        return super.shouldTrackOutputImpl();
     }
 
     @Override
     public boolean shouldBroadcastConsoleToOps() {
-        return super.shouldBroadcastConsoleToOps();
+        return super.shouldBroadcastConsoleToOpsImpl();
     }
 }
