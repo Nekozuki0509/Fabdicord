@@ -3,6 +3,7 @@ package com.github.nekozuki0509.common.pmConnection;
 import com.github.nekozuki0509.common.Common;
 import com.github.nekozuki0509.common.Discord;
 import com.github.nekozuki0509.common.Log;
+import com.github.nekozuki0509.common.minecraft.MinecraftPlayer;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.util.Arrays;
@@ -11,7 +12,7 @@ import java.util.Optional;
 
 public abstract class PluginMessageManager {
     public static void receive(String[] data) {
-        if (data[1].equals("OK")) {
+        if (data[1].contains("OK")) {
             Discord.setNoticeChannel(Optional.ofNullable(Discord.getJda().getTextChannelById(data[2])));
             Discord.getNoticeChannel().orElseThrow();
             Common.getConfig().put("NoticeChannelID", data[2]);
@@ -50,6 +51,8 @@ public abstract class PluginMessageManager {
                 Discord.sendMessage(message, false);
                 return true;
             });
+
+            if (data[1].equals("OK")) Common.getPMManager().sendMessage("RESOK&%s&%s".formatted(Common.getServerName(), Common.getServer().getOnlinePlayers().stream().filter(MinecraftPlayer::isFakePlayer).collect(StringBuilder::new, (sb, player) -> sb.append(player.getName()).append(","), StringBuilder::append).toString()));
         } else Common.getLOGGER().error("Unknown message received: %s".formatted(Arrays.stream(data).collect(StringBuilder::new, (sb, s) -> sb.append(s).append("&"), StringBuilder::append).toString()));
     }
 

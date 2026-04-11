@@ -176,11 +176,33 @@ public class Common {
         api.onPlayerJoin(player -> {
             if (!player.isFakePlayer()) return;
 
+            String PN = player.getName();
+            sendMessage(new EmbedBuilder()
+                    .setTitle("[%s] に参加しました".formatted(ServerName))
+                    .setColor(Color.blue)
+                    .setAuthor("(BOT) %s".formatted(PN), null,
+                            "https://mc-heads.net/avatar/%s.png".formatted(PN))
+                    .build(), false);
+            getPMManager().sendMessage(
+                    "READ&<yellow><aqua>[<blue>(BOT)</blue> %s]</aqua> が <dark_green>[%s]</dark_green> に参加しました&ボット%sが%sに参加しました"
+                            .formatted(PN, ServerName, PN, ServerName));
+
             getPMManager().sendMessage("JOIN&%s&%s".formatted(ServerName, player.getName()));
         });
 
         api.onPlayerDisconnect(player -> {
             if (!player.isFakePlayer()) return;
+
+            String PN = player.getName();
+            sendMessage(new EmbedBuilder()
+                    .setTitle("退出しました")
+                    .setColor(Color.blue)
+                    .setAuthor("(BOT) %s".formatted(PN), null,
+                            "https://mc-heads.net/avatar/%s.png".formatted(PN))
+                    .build(), false);
+            getPMManager().sendMessage(
+                    "READ&<aqua>[<blue>(BOT)</blue> %s]</aqua> <yellow>が退出しました&ボット%sがマイクラサーバーから退出しました"
+                            .formatted(PN, PN));
 
             getPMManager().sendMessage("DISCONNECT&%s&%s".formatted(ServerName, player.getName()));
         });
@@ -220,7 +242,7 @@ public class Common {
             String completion = e.getVelocityCompletionWord();
 
             Discord.sendMessage(new EmbedBuilder()
-                    .setTitle("[%s] で%s [%s] %sしました".formatted(ServerName, frame, title, completion))
+                    .setTitle("[%s] で%s [%s] を%sしました".formatted(ServerName, frame, title, completion))
                     .setDescription(description)
                     .setColor(Color.green)
                     .setAuthor("%s%s".formatted(PNpre, PN), null, "https://mc-heads.net/avatar/%s.png".formatted(PN))

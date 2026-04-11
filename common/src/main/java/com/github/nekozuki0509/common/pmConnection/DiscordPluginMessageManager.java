@@ -2,6 +2,7 @@ package com.github.nekozuki0509.common.pmConnection;
 
 import com.github.nekozuki0509.common.Common;
 import com.github.nekozuki0509.common.Discord;
+import com.github.nekozuki0509.common.minecraft.MinecraftPlayer;
 import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
@@ -18,7 +19,7 @@ public class DiscordPluginMessageManager extends PluginMessageManager {
         super();
 
         this.PMChannel = Optional.ofNullable(Discord.getJda().getTextChannelById(Common.getConfig().get("PMChannelID"))).orElseThrow();
-        sendMessage("OK&%s".formatted(Common.getServerName()));
+        sendMessage("OK&%s&%s".formatted(Common.getServerName(), Common.getServer().getOnlinePlayers().stream().filter(MinecraftPlayer::isFakePlayer).collect(StringBuilder::new, (sb, player) -> sb.append(player.getName()).append(","), StringBuilder::append).toString()));
     }
 
     @Override
