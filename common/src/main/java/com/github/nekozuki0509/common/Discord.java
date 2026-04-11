@@ -119,7 +119,11 @@ public class Discord extends ListenerAdapter {
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (getPMManager() instanceof DiscordPluginMessageManager manager && !event.getChannel().getId().equals(manager.getPMChannel().getId()))
             return;
-        PluginMessageManager.receive(event.getMessage().getContentDisplay());
+
+        String[] data = event.getMessage().getContentDisplay().split("&");
+        if (data[0].equals(Common.getServerName()) || data[0].equals("ALL")) {
+            PluginMessageManager.receive(data);
+        }
     }
 
     @Override

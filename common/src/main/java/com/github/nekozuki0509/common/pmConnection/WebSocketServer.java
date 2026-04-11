@@ -82,7 +82,7 @@ public class WebSocketServer {
 
     @OnMessage
     public void onMessage(String message, Session sender) {
-        PluginMessageManager.receive("%s&%s".formatted(Common.getServerName(), message));
+        PluginMessageManager.receive("%s&%s".formatted(Common.getServerName(), message).split("&"));
     }
 
     @OnError

@@ -18,7 +18,7 @@ public class DiscordPluginMessageManager extends PluginMessageManager {
         super();
 
         this.PMChannel = Optional.ofNullable(Discord.getJda().getTextChannelById(Common.getConfig().get("PMChannelID"))).orElseThrow();
-        sendMessage("VELOCITY&OK&%s".formatted(Common.getServerName()));
+        sendMessage("OK&%s".formatted(Common.getServerName()));
     }
 
     @Override

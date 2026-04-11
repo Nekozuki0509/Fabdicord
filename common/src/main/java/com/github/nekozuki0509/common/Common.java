@@ -175,30 +175,14 @@ public class Common {
 
         api.onPlayerJoin(player -> {
             if (!player.isFakePlayer()) return;
-            String PN = player.getName();
-            sendMessage(new EmbedBuilder()
-                    .setTitle("[%s] に入室しました".formatted(ServerName))
-                    .setColor(Color.blue)
-                    .setAuthor("(BOT) %s".formatted(PN), null,
-                            "https://mc-heads.net/avatar/%s.png".formatted(PN))
-                    .build(), false);
-            getPMManager().sendMessage(
-                    "READ&<yellow><aqua>[<blue>(BOT)</blue> %s]</aqua> が <dark_green>[%s]</dark_green> に入室しました&(bot) %sが%sに入室しました"
-                            .formatted(PN, ServerName, PN, ServerName));
+
+            getPMManager().sendMessage("JOIN&%s&%s".formatted(ServerName, player.getName()));
         });
 
         api.onPlayerDisconnect(player -> {
             if (!player.isFakePlayer()) return;
-            String PN = player.getName();
-            sendMessage(new EmbedBuilder()
-                    .setTitle("退出しました")
-                    .setColor(Color.blue)
-                    .setAuthor("(BOT) %s".formatted(PN), null,
-                            "https://mc-heads.net/avatar/%s.png".formatted(PN))
-                    .build(), false);
-            getPMManager().sendMessage(
-                    "READ&<aqua>[<blue>(BOT)</blue> %s]</aqua> <yellow>が退出しました&(bot) %sがマイクラサーバーから退出しました"
-                            .formatted(PN, PN));
+
+            getPMManager().sendMessage("DISCONNECT&%s&%s".formatted(ServerName, player.getName()));
         });
 
         api.onServerStopped(() -> {
@@ -243,7 +227,7 @@ public class Common {
                     .build(), false);
 
             getPMManager().sendMessage(
-                    "VELOCITY&SEND&<yellow><dark_green>[%s]</dark_green> で <aqua>[<blue>%s</blue>%s]</aqua> が%s <hover:show_text:'<%s>%s\n%s</%s>'><%s>[%s]</%s></hover> を%sしました"
+                    "SEND&<yellow><dark_green>[%s]</dark_green> で <aqua>[<blue>%s</blue>%s]</aqua> が%s <hover:show_text:'<%s>%s\n%s</%s>'><%s>[%s]</%s></hover> を%sしました"
                             .formatted(ServerName, PNpre, PN, frame, color, title, description, color, color, title, color, completion)
             );
         });
@@ -262,7 +246,7 @@ public class Common {
                     .build(), false);
 
             getPMManager().sendMessage(
-                    "VELOCITY&READ&<hover:show_text:'%s'><red><dark_green>[%s]</dark_green><yellow>%s</yellow> で <aqua>[<blue>%s</blue>%s]</aqua> が死亡しました&%s%sで%s%sが死亡しました"
+                    "READ&<hover:show_text:'%s'><red><dark_green>[%s]</dark_green><yellow>%s</yellow> で <aqua>[<blue>%s</blue>%s]</aqua> が死亡しました&%s%sで%s%sが死亡しました"
                             .formatted(message, ServerName, place, PNpre, PN, ServerName, place, PNpre, PN)
             );
         });

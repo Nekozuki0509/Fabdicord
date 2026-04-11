@@ -40,18 +40,18 @@ dependencies {
 }
 
 def resVersion          = project.version
-def resMcVersion        = project.property("minecraft_version")
+def resMcVersion        = project.property("archive_version")
 def resLoaderVersion    = project.property("loader_version")
 
 processResources {
     inputs.property "version",           resVersion
-    inputs.property "minecraft_version", resMcVersion
+    inputs.property "archive_version", resMcVersion
     inputs.property "loader_version",    resLoaderVersion
 
     filesMatching("fabric.mod.json") {
         expand(
                 version:           resVersion,
-                minecraft_version: resMcVersion,
+                archive_version: resMcVersion,
                 loader_version:    resLoaderVersion
         )
     }
