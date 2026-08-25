@@ -1,7 +1,7 @@
 package com.github.nekozuki0509.fabdicord.impl;
 
 import carpet.patches.EntityPlayerMPFake;
-import com.github.nekozuki0509.common.minecraft.MinecraftPlayer;
+import com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftPlayer;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package com.github.nekozuki0509.common;
+package com.github.nekozuki0509.fabdicord.common;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 

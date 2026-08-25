@@ -1,9 +1,8 @@
 package com.github.nekozuki0509.fabdicord.impl;
 
-import com.github.nekozuki0509.common.Common;
-import com.github.nekozuki0509.common.DiscordCommandSource;
-import com.github.nekozuki0509.common.minecraft.MinecraftPlayer;
-import com.github.nekozuki0509.common.minecraft.MinecraftServerApi;
+import com.github.nekozuki0509.fabdicord.common.Common;
+import com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftPlayer;
+import com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftServerApi;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;

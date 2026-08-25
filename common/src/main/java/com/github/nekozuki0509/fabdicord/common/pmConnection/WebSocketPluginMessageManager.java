@@ -1,4 +1,4 @@
-package com.github.nekozuki0509.common.pmConnection;
+package com.github.nekozuki0509.fabdicord.common.pmConnection;
 
 public class WebSocketPluginMessageManager extends PluginMessageManager {
 

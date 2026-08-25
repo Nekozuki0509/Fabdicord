@@ -1,6 +1,6 @@
 package com.github.nekozuki0509.fabdicord.impl;
 
-import com.github.nekozuki0509.common.minecraft.MinecraftText;
+import com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftText;
 import net.minecraft.text.Text;
 
 public class TextToMinecraftText implements MinecraftText {

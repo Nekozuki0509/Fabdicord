@@ -1,6 +1,6 @@
 package com.github.nekozuki0509.fabdicord.impl;
 
-import com.github.nekozuki0509.common.DiscordCommandSource;
+import com.github.nekozuki0509.fabdicord.common.DiscordCommandSource;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.minecraft.server.command.CommandOutput;
 import net.minecraft.text.Text;

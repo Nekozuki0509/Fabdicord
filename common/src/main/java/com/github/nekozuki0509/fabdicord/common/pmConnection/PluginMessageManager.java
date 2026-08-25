@@ -1,9 +1,9 @@
-package com.github.nekozuki0509.common.pmConnection;
+package com.github.nekozuki0509.fabdicord.common.pmConnection;
 
-import com.github.nekozuki0509.common.Common;
-import com.github.nekozuki0509.common.Discord;
-import com.github.nekozuki0509.common.Log;
-import com.github.nekozuki0509.common.minecraft.MinecraftPlayer;
+import com.github.nekozuki0509.fabdicord.common.Common;
+import com.github.nekozuki0509.fabdicord.common.Discord;
+import com.github.nekozuki0509.fabdicord.common.Log;
+import com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftPlayer;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.util.Arrays;

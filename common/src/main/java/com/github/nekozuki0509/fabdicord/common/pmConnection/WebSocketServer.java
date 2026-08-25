@@ -1,6 +1,6 @@
-package com.github.nekozuki0509.common.pmConnection;
+package com.github.nekozuki0509.fabdicord.common.pmConnection;
 
-import com.github.nekozuki0509.common.Common;
+import com.github.nekozuki0509.fabdicord.common.Common;
 
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;

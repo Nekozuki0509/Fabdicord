@@ -1,4 +1,4 @@
-package com.github.nekozuki0509.common.minecraft;
+package com.github.nekozuki0509.fabdicord.common.minecraft;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 

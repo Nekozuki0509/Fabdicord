@@ -1,7 +1,7 @@
 package com.github.nekozuki0509.fabdicord.impl;
 
-import com.github.nekozuki0509.common.Common;
-import com.github.nekozuki0509.common.minecraft.*;
+import com.github.nekozuki0509.fabdicord.common.Common;
+import com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftDeathEvent;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -21,13 +21,13 @@ import static com.mojang.brigadier.arguments.StringArgumentType.string;
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
-public class MinecraftApiImpl implements MinecraftApi {
+public class MinecraftApiImpl implements com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftApi {
 
     public static MinecraftApiImpl INSTANCE;
 
-    private BiConsumer<MinecraftCommandSourceInfo, String> commandExecutedHandler;
-    private Consumer<MinecraftAdvancementEvent> advancementHandler;
-    private Consumer<MinecraftDeathEvent> deathHandler;
+    private BiConsumer<com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftCommandSourceInfo, String> commandExecutedHandler;
+    private Consumer<com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftAdvancementEvent> advancementHandler;
+    private Consumer<com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftDeathEvent> deathHandler;
 
     public MinecraftApiImpl() {
         INSTANCE = this;
@@ -49,8 +49,8 @@ public class MinecraftApiImpl implements MinecraftApi {
 
     @Override
     public void registerPosCommand(
-            Consumer<MinecraftCommandSource> onPos,
-            BiConsumer<MinecraftCommandSource, String> onNamedPos
+            Consumer<com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftCommandSource> onPos,
+            BiConsumer<com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftCommandSource, String> onNamedPos
     ) {
         CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) ->
                 dispatcher.register(literal("pos")
@@ -69,13 +69,13 @@ public class MinecraftApiImpl implements MinecraftApi {
     }
 
     @Override
-    public void onPlayerJoin(Consumer<MinecraftPlayer> handler) {
+    public void onPlayerJoin(Consumer<com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftPlayer> handler) {
         ServerPlayConnectionEvents.JOIN.register((h, sender, s) ->
                 handler.accept(new MinecraftPlayerImpl(h.player)));
     }
 
     @Override
-    public void onPlayerDisconnect(Consumer<MinecraftPlayer> handler) {
+    public void onPlayerDisconnect(Consumer<com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftPlayer> handler) {
         ServerPlayConnectionEvents.DISCONNECT.register((h, s) ->
                 handler.accept(new MinecraftPlayerImpl(h.player)));
     }
@@ -86,23 +86,23 @@ public class MinecraftApiImpl implements MinecraftApi {
     }
 
     @Override
-    public void onServerStarting(Consumer<MinecraftServerApi> handler) {
+    public void onServerStarting(Consumer<com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftServerApi> handler) {
         ServerLifecycleEvents.SERVER_STARTING.register(s ->
                 handler.accept(new MinecraftServerApiImpl(s)));
     }
 
     @Override
-    public void onCommandExecuted(BiConsumer<MinecraftCommandSourceInfo, String> handler) {
+    public void onCommandExecuted(BiConsumer<com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftCommandSourceInfo, String> handler) {
         this.commandExecutedHandler = handler;
     }
 
     @Override
-    public void onPlayerAdvancement(Consumer<MinecraftAdvancementEvent> handler) {
+    public void onPlayerAdvancement(Consumer<com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftAdvancementEvent> handler) {
         this.advancementHandler = handler;
     }
 
     @Override
-    public void onPlayerDeath(Consumer<MinecraftDeathEvent> handler) {
+    public void onPlayerDeath(Consumer<com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftDeathEvent> handler) {
         this.deathHandler = handler;
     }
 
@@ -112,7 +112,7 @@ public class MinecraftApiImpl implements MinecraftApi {
 
     public void fireCommandExecuted(ServerCommandSource source, String command) {
         if (commandExecutedHandler == null) return;
-        commandExecutedHandler.accept(new MinecraftCommandSourceInfo() {
+        commandExecutedHandler.accept(new com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftCommandSourceInfo() {
             @Override
             public boolean isPlayer() {
                 return source.getEntity() instanceof ServerPlayerEntity;
@@ -138,9 +138,9 @@ public class MinecraftApiImpl implements MinecraftApi {
             String velocityColor, String completionWord
     ) {
         if (advancementHandler == null) return;
-        advancementHandler.accept(new MinecraftAdvancementEvent() {
+        advancementHandler.accept(new com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftAdvancementEvent() {
             @Override
-            public MinecraftPlayer getPlayer() {
+            public com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftPlayer getPlayer() {
                 return new MinecraftPlayerImpl(player);
             }
 
@@ -179,7 +179,7 @@ public class MinecraftApiImpl implements MinecraftApi {
         if (deathHandler == null) return;
         deathHandler.accept(new MinecraftDeathEvent() {
             @Override
-            public MinecraftPlayer getPlayer() {
+            public com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftPlayer getPlayer() {
                 return new MinecraftPlayerImpl(player);
             }
 
@@ -214,10 +214,10 @@ public class MinecraftApiImpl implements MinecraftApi {
     // 変換ヘルパー
     // ----------------------------------------------------------------
 
-    private MinecraftCommandSource toCommandSource(ServerCommandSource source) {
-        return new MinecraftCommandSource() {
+    private com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftCommandSource toCommandSource(ServerCommandSource source) {
+        return new com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftCommandSource() {
             @Override
-            public MinecraftPlayer getPlayer() {
+            public com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftPlayer getPlayer() {
                 try {
                     return source.getPlayer() != null ? new MinecraftPlayerImpl(source.getPlayer()) : null;
                 } catch (CommandSyntaxException e) {

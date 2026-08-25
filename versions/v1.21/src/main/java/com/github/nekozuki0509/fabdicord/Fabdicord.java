@@ -1,6 +1,6 @@
 package com.github.nekozuki0509.fabdicord;
 
-import com.github.nekozuki0509.common.Common;
+import com.github.nekozuki0509.fabdicord.common.Common;
 import com.github.nekozuki0509.fabdicord.impl.MinecraftApiImpl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;

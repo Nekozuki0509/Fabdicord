@@ -1,6 +1,6 @@
-package com.github.nekozuki0509.common;
+package com.github.nekozuki0509.fabdicord.common;
 
-import com.github.nekozuki0509.common.minecraft.MinecraftText;
+import com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftText;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 

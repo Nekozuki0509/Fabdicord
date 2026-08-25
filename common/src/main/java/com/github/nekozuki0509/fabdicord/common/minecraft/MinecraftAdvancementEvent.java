@@ -1,4 +1,4 @@
-package com.github.nekozuki0509.common.minecraft;
+package com.github.nekozuki0509.fabdicord.common.minecraft;
 
 public interface MinecraftAdvancementEvent {
     MinecraftPlayer getPlayer();

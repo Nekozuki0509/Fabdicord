@@ -1,10 +1,10 @@
-package com.github.nekozuki0509.common;
+package com.github.nekozuki0509.fabdicord.common;
 
-import com.github.nekozuki0509.common.minecraft.MinecraftApi;
-import com.github.nekozuki0509.common.minecraft.MinecraftServerApi;
-import com.github.nekozuki0509.common.pmConnection.DiscordPluginMessageManager;
-import com.github.nekozuki0509.common.pmConnection.PluginMessageManager;
-import com.github.nekozuki0509.common.pmConnection.WebSocketPluginMessageManager;
+import com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftApi;
+import com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftServerApi;
+import com.github.nekozuki0509.fabdicord.common.pmConnection.DiscordPluginMessageManager;
+import com.github.nekozuki0509.fabdicord.common.pmConnection.PluginMessageManager;
+import com.github.nekozuki0509.fabdicord.common.pmConnection.WebSocketPluginMessageManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.github.nekozuki0509.common.Discord.sendMessage;
+import static com.github.nekozuki0509.fabdicord.common.Discord.sendMessage;
 
 public class Common {
 

@@ -1,8 +1,8 @@
-package com.github.nekozuki0509.common;
+package com.github.nekozuki0509.fabdicord.common;
 
-import com.github.nekozuki0509.common.minecraft.MinecraftPlayer;
-import com.github.nekozuki0509.common.pmConnection.DiscordPluginMessageManager;
-import com.github.nekozuki0509.common.pmConnection.PluginMessageManager;
+import com.github.nekozuki0509.fabdicord.common.minecraft.MinecraftPlayer;
+import com.github.nekozuki0509.fabdicord.common.pmConnection.DiscordPluginMessageManager;
+import com.github.nekozuki0509.fabdicord.common.pmConnection.PluginMessageManager;
 import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -30,7 +30,7 @@ import java.util.*;
 import java.util.List;
 import java.util.Queue;
 
-import static com.github.nekozuki0509.common.Common.*;
+import static com.github.nekozuki0509.fabdicord.common.Common.*;
 
 public class Discord extends ListenerAdapter {
 

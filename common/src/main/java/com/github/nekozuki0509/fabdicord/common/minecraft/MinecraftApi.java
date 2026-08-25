@@ -1,4 +1,4 @@
-package com.github.nekozuki0509.common.minecraft;
+package com.github.nekozuki0509.fabdicord.common.minecraft;
 
 import java.nio.file.Path;
 import java.util.function.BiConsumer;
